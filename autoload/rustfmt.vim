@@ -92,7 +92,9 @@ endfunction
 function! rustfmt#FormatRange(line1, line2)
 	let l:curw = winsaveview()
 	let l:tmpname = expand("%:p:h") . "/." . expand("%:p:t") . ".rustfmt"
+	let l:permissions = getfperm(@%)
 	call writefile(getline(1, '$'), l:tmpname)
+	call setfperm(l:tmpname, l:permissions)
 
 	let command = s:RustfmtCommandRange(l:tmpname, a:line1, a:line2)
 
@@ -102,7 +104,9 @@ endfunction
 function! rustfmt#Format()
 	let l:curw = winsaveview()
 	let l:tmpname = expand("%:p:h") . "/." . expand("%:p:t") . ".rustfmt"
+	let l:permissions = getfperm(@%)
 	call writefile(getline(1, '$'), l:tmpname)
+	call setfperm(l:tmpname, l:permissions)
 
 	let command = s:RustfmtCommand(l:tmpname)
 
